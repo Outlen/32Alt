@@ -22,6 +22,7 @@
         <li class="menu"><a href="check_item_add.php">Add item</a></li>
         <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
         <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
+        <li class="menu"><a href="short_stock_login.php">Stock Monitoring</a></li>
     </ul>		
 </nav>
 
@@ -59,15 +60,9 @@ if ($proid === "admin" && $propass === "Pa55w.rd" || $type == "Manager" && $id =
             <p><label for='itemname'>Item Name: </label>
             <input type='text' name='itemname' id='itemname' maxlength='100' required/></p>
             <p><label for='itemprice'>Item Price (AUD): </label>
-            <input type='text' name='itemprice' id='itemprice' maxlength='11' required/></p>
+            <input type='number' step='0.05' name='itemprice' id='itemprice' maxlength='11' required/></p>
             <p><label for='itemquantity'>Item Quantity: </label>
-            <input type='text' name='itemquantity' id='itemquantity' pattern='[0-9]+' maxlength='11' required/></p>
-            <p><label for='date' required>Item Expiry Date: </label>
-            <input type='date' name='date' id='date'/></p>
-            <p><label for='itemc'>Item Category: </label>
-            <input type='text' name='itemc' id='itemc' maxlength='20' required/></p>
-            <p><label for='itemmonthlysupply'>Item Monthly Supplier Purchases: </label>
-            <input type='text' name='itemmonthlysupply' id='itemmonthlysupply' pattern='[0-9]+' maxlength='11' required/></p>
+            <input type='number' name='itemquantity' id='itemquantity' pattern='[0-9]+' maxlength='11' required/></p>
         </fieldset>
         <br>
 

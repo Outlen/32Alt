@@ -12,7 +12,7 @@
 <h1>GotoGrow-MRM Website</h1>
 <nav>
     <ul>
-        <li class="menu"><a href="index.php">Home</a></li>
+    <li class="menu"><a href="index.php">Home</a></li>
         <li class="menu"><a href="check_add.php">Add Member</a></li>
         <li class="menu"><a href="check_edit.php">Edit Member</a></li>
         <li class="menu"><a href="check_delete.php">Delete Member</a></li>
@@ -22,6 +22,7 @@
         <li class="menu"><a href="check_item_add.php">Add item</a></li>
         <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
         <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
+        <li class="menu"><a href="short_stock_login.php">Stock Monitoring</a></li>
     </ul>		
 </nav>
 
@@ -33,21 +34,17 @@
     session_start();
 
     // disables fatal errors from breaking the code execution. Used for mysqli_query() method
-    mysqli_report(MYSQLI_REPORT_OFF);
+
     
     //Delcearse the rest of the vairables to be used
     $itemname = $_POST["itemname"];
     $itemprice = $_POST["itemprice"];
     $itemquantity = $_POST["itemquantity"];
-    $date = $_POST["date"];
-    $itemc = $_POST["itemc"];
-    $itemmonthlysupply = $_POST["itemmonthlysupply"];
     $servername = "localhost";
 	$user = "root";
 	$pwd = "";
 	$sql_db = "goto_gro_databases";
     //Makes the connection to the database
-    $conn = new mysqli($servername, $user, $pwd);
     $conn2 = new mysqli($servername, $user, $pwd, $sql_db);
     echo "<h2>Add Item Confirmation</h2>";
 
@@ -56,10 +53,7 @@
         echo "<h3>Below is the Item data: </h3>
         <p>Item Name: $itemname</p>
         <p>Item Price (AUD): $itemprice</p>
-        <p>Item Quantity: $itemquantity</p>
-        <p>Item Expiry Date: $date </p>
-        <p>Item Category: $itemc </p>
-        <p>Item Monthly Supplier Purchases: $itemmonthlysupply </p>";
+        <p>Item Quantity: $itemquantity</p>";
 
         //Checks if the database connection is successful
         if ($conn2->connect_error) {
@@ -70,8 +64,8 @@
         } else {
             //If the connection is successful add the data to the appropirate table
             $sql_table = "stock";
-            $query = "INSERT INTO `$sql_table` (`stockName`, `stockPrice_AUD`, `stockQuantity`, `stockExpiryDate`, `stockCategory`, `stockMonthlySupplierPurchases`)
-            VALUES ('$itemname', '$itemprice', '$itemquantity', '$date', '$itemc', '$itemmonthlysupply')";
+            $query = "INSERT into $sql_table (stockName, stockPrice_AUD, stockQuantity)
+            values ('$itemname', '$itemprice', '$itemquantity')";
             $result = mysqli_query($conn2, $query);
             
             if (!$result) {
@@ -82,7 +76,7 @@
             }
             //Close the connection
             $conn2->close();
-        }   
+        }
 
 ?>
 

@@ -22,6 +22,7 @@
         <li class="menu"><a href="check_item_add.php">Add item</a></li>
         <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
         <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
+        <li class="menu"><a href="short_stock_login.php">Stock Monitoring</a></li>
     </ul>		
 </nav>
 
