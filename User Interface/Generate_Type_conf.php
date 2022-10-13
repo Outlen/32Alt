@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="author" content="Allen" />
+    <meta name="description" content="Adds members from database" />
+    <meta name="author" content="Kipp STRATMANN" />
     <title>GotoGrow-MRM Member Management</title>
-</head>
+    </head>
 <body>
     <header>
-        <?php
-         /* Highlight.php
-        Author: Allen
-        Last Edited: 5/10/2022
-        */   
-        ?> 
+        <?php   
+        /* add_member_conf.php
+        Adds members to the SQL database. 
+        Author: K. Stratmann
+        Last Edited: 19/09/2022
+        */
+        ?>
         <link href="styles/style.css" rel="stylesheet" />
     </header>
     <h1>GotoGrow-MRM Website</h1>
@@ -35,54 +37,44 @@
 		<li class="menu"><a href="check_generate_type.php">Product type report</a></li>
     </ul>		
 </nav>
-<hr> 
-	<h2>GotoGrow-MRM Member Management - Highlight product type</h2>
-    <p>See what product types members are buying</p>
 
+<hr> 
     <?php
-	
-    $proid = $_POST["proid"];
-    $propass = $_POST["propass"];
+    //Starts the session
+    session_start();
+
+    //Delcearse the rest of the vairables to be used
+    $month = $_POST["month"];
+	$year = $_POST["year"];
     $servername = "localhost";
-    $user = "root";
+	$user = "root";
 	$pwd = "";
 	$sql_db = "goto_gro_databases";
-    $sql_table = "users";
+    //Makes the connection to the database
     $conn = new mysqli($servername, $user, $pwd, $sql_db);
-    $query = "SELECT userType, userLoginName, userPassword FROM $sql_table WHERE userLoginName = '$proid'";
-    $result = mysqli_query($conn, $query);
-    if ($result->num_rows > 0 || $proid === "admin" && $propass === "Pa55w.rd") {
-            while($row = $result->fetch_assoc()) {
-                $type = $row["userType"];
-                $id = $row["userLoginName"];
-                $pass = $row["userPassword"];
-		}
-    }
 
-	if ($proid === "admin" && $propass === "Pa55w.rd" || $type == "Manager" && $id == $proid && $pass == $propass) { echo"
-    <form method='post' action='Highlight_Type_conf.php'
-        <fieldset>
-            <legend><strong>Select the month and year</strong></legend>
-            <p><label for='month'>Month:</label>
-            <input type='text' name='month' id='month'/></p>
-			<p><label for='year'>Year:</label>
-            <input type='text' name='year' id='year'/></p>
-			
+    //Checks that an error message doesn't exits and  increments the count value 
+	$results = $conn->query("SELECT stockCategory, SUM(itemQuantityBought) as BoughtQuantity
+FROM sales NATURAL JOIN STOCK
+WHERE monthname(date) = '$month' AND year(date) = '$year'
+GROUP BY stockCategory
+ORDER BY BoughtQuantity DESC
+LIMIT 5
+INTO OUTFILE 'D:/ProductTypeReport.csv' 
+FIELDS ENCLOSED BY '\"' 
+TERMINATED BY '\,' 
+ESCAPED BY '\"' 
+LINES TERMINATED BY '\r\n';");
 
-        </fieldset>
-        <br>
-
-        <input type= 'submit' value='Submit Form'/>
-        <input type= 'reset' value='Clear Form'/>
-
-    
-    </div></form>";
-    }
-
-?>
-
-	<footer>
-        <hr>
+	echo "CSV file generated";	
+	
+	//Close the connection
+	$conn->close();
+            
+        
+    ?>  
+    <footer>
+    <hr>
         <p>Site Designed and Created by: MSP32</p> 
 </footer>
 

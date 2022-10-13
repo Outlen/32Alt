@@ -29,6 +29,10 @@
         <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
         <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
 		<li class="menu"><a href="check_view_details.php">View member</a></li>
+		<li class="menu"><a href="check_highlight_product.php">Highlight Products</a></li>
+		<li class="menu"><a href="check_generate_product.php">Product report</a></li>
+		<li class="menu"><a href="check_highlight_type.php">Highlight Product Types</a></li>
+		<li class="menu"><a href="check_generate_type.php">Product type report</a></li>
     </ul>		
 </nav>
 <hr> 
@@ -45,7 +49,7 @@
 	$sql_db = "goto_gro_databases";
     $sql_table = "users";
     $conn = new mysqli($servername, $user, $pwd, $sql_db);
-    $query = "SELECT userType, userLoginName, userPassword, userFirstName, userLastName, userEmail, userPhone, userAddress  FROM $sql_table WHERE userLoginName = '$proid'";
+    $query = "SELECT userType, userLoginName, userPassword FROM $sql_table WHERE userLoginName = '$proid'";
     $result = mysqli_query($conn, $query);
     if ($result->num_rows > 0 || $proid === "admin" && $propass === "Pa55w.rd") {
             while($row = $result->fetch_assoc()) {
@@ -55,7 +59,8 @@
 		}
     }
 
-	if ($proid === "admin" && $propass === "Pa55w.rd" || $type == "Manager" && $id == $proid && $pass == $propass) { echo"
+	if ($proid === "admin" && $propass === "Pa55w.rd" || $type == "Manager" && $id == $proid && $pass == $propass) { 
+	echo"
     <form method='post' action='Highlight_Product_conf.php'
         <fieldset>
             <legend><strong>Select the month and year</strong></legend>
@@ -67,7 +72,6 @@
 
         </fieldset>
         <br>
-
         <input type= 'submit' value='Submit Form'/>
         <input type= 'reset' value='Clear Form'/>
 

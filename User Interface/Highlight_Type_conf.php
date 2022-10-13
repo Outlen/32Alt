@@ -31,6 +31,10 @@
         <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
         <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
 		<li class="menu"><a href="check_view_details.php">View member</a></li>
+		<li class="menu"><a href="check_highlight_product.php">Highlight Products</a></li>
+		<li class="menu"><a href="check_generate_product.php">Product report</a></li>
+		<li class="menu"><a href="check_highlight_type.php">Highlight Product Types</a></li>
+		<li class="menu"><a href="check_generate_type.php">Product type report</a></li>
     </ul>		
 </nav>
 
@@ -54,7 +58,8 @@
 								FROM sales NATURAL JOIN STOCK
 								WHERE monthname(date) = '$month' AND year(date) = '$year'
 								GROUP BY stockCategory
-								ORDER BY BoughtQuantity DESC");
+								ORDER BY BoughtQuantity DESC
+								LIMIT 5");
 
 	echo "<table border='1'>
 		<tr>
@@ -65,7 +70,7 @@
 	while($row = mysqli_fetch_array($results)) {
 		echo "<tr>";
   
-		echo "<td>" . $row['stockName'] . "</td>";
+		echo "<td>" . $row['stockCategory'] . "</td>";
 		echo "<td>" . $row['BoughtQuantity'] . "</td>";
   
 		echo "</tr>";

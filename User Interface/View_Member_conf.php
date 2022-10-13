@@ -37,48 +37,84 @@
 		<li class="menu"><a href="check_generate_type.php">Product type report</a></li>
     </ul>		
 </nav>
+
 <hr> 
     <?php
     //Starts the session
     session_start();
 
     //Delcearse the rest of the vairables to be used
-    $month = $_POST["month"];
-	$year = $_POST["year"];
+    $orderID = $_POST["orderID"];
     $servername = "localhost";
 	$user = "root";
 	$pwd = "";
 	$sql_db = "goto_gro_databases";
     //Makes the connection to the database
     $conn = new mysqli($servername, $user, $pwd, $sql_db);
+	
+	$id = $_SESSION['id'];
+	
 
     //Checks that an error message doesn't exits and  increments the count value 
-	$results = $conn->query("SELECT stockName, SKU, SUM(itemQuantityBought) as BoughtQuantity
-								FROM sales NATURAL JOIN STOCK
-								WHERE monthname(date) = '$month' AND year(date) = '$year'
-								GROUP BY stockName
-								ORDER BY BoughtQuantity DESC
-								LIMIT 10");
+	$results = $conn->query("SELECT SaleID, date
+										FROM sales NATURAL JOIN stock
+										WHERE userID = $id
+										GROUP BY SaleID
+										ORDER BY SaleID ASC");
+	
+	$validID = array();
+	
+	while($row = mysqli_fetch_array($results)) {			
+				$validID[] = $row['SaleID'];
+		}
+	
+	$checkID = in_array($orderID, $validID);
 
-	echo "<table border='1'>
 
+	
+	if ($checkID == false) {
+		echo 'You have entered a sale ID that is not yours. Redirecting to the login page';
+		
+		header("refresh:3; url=check_view_details.php");
+		exit();
+	}
+	
+	else {
+		$results2 = $conn->query("SELECT saleID, stockName, itemQuantityBought, stockPrice_AUD, itemQuantityBought * stockPrice_AUD as Item_Total_Price, date
+								FROM sales NATURAL JOIN stock
+								WHERE saleID = $orderID");
+		
+		
+		echo "<table border='1'>
 		<tr>
-		<th>stockName</th>
-		<th>SKU</th>
-		<th>BoughtQuantity</th>
+		<th>Order ID</th>
+		<th>Item name</th>
+		<th>Item quantity</th>
+		<th>Item unit price</th>
+		<th>Total</th>
+		<th>Date purchase</th>
 		</tr>";
-	while($row = mysqli_fetch_array($results)) {
+		
+		while($row = mysqli_fetch_array($results2)) {
+			echo "<tr>";
   
-		echo "<tr>";
+			echo "<td>" . $row['saleID'] . "</td>";
+			echo "<td>" . $row['stockName'] . "</td>";
+			echo "<td>" . $row['itemQuantityBought'] . "</td>";
+			echo "<td>" . $row['stockPrice_AUD'] . "</td>";
+			echo "<td>" . $row['Item_Total_Price'] . "</td>";
+			echo "<td>" . $row['date'] . "</td>";
   
-		echo "<td>" . $row['stockName'] . "</td>";
-		echo "<td>" . $row['SKU'] . "</td>";
-		echo "<td>" . $row['BoughtQuantity'] . "</td>";
-  
-		echo "</tr>";
+			echo "</tr>";
   }
   
-	echo "</table>";	
+	echo "</table>";
+	}
+	
+	
+	
+
+
 	
 	//Close the connection
 	$conn->close();

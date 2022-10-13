@@ -36,8 +36,8 @@
     </ul>		
 </nav>
 <hr> 
-	<h2>GotoGrow-MRM Member Management - Highlight product type</h2>
-    <p>See what product types members are buying</p>
+	<h2>GotoGrow-MRM Member Management - Generate monthly product report</h2>
+    <p>See what product members are buying</p>
 
     <?php
 	
@@ -49,7 +49,7 @@
 	$sql_db = "goto_gro_databases";
     $sql_table = "users";
     $conn = new mysqli($servername, $user, $pwd, $sql_db);
-    $query = "SELECT userType, userLoginName, userPassword FROM $sql_table WHERE userLoginName = '$proid'";
+    $query = "SELECT userType, userLoginName, userPassword  FROM $sql_table WHERE userLoginName = '$proid'";
     $result = mysqli_query($conn, $query);
     if ($result->num_rows > 0 || $proid === "admin" && $propass === "Pa55w.rd") {
             while($row = $result->fetch_assoc()) {
@@ -60,7 +60,7 @@
     }
 
 	if ($proid === "admin" && $propass === "Pa55w.rd" || $type == "Manager" && $id == $proid && $pass == $propass) { echo"
-    <form method='post' action='Highlight_Type_conf.php'
+    <form method='post' action='Generate_Product_conf.php'
         <fieldset>
             <legend><strong>Select the month and year</strong></legend>
             <p><label for='month'>Month:</label>
