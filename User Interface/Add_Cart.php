@@ -30,6 +30,7 @@
         <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
         <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
         <li class="menu"><a href="short_stock_login.php">Stock Monitoring</a></li>
+        <li class="menu"><a href="check_cart.php">Ordering</a></li>
     </ul>		
 </nav>
 <hr> 
@@ -37,6 +38,7 @@
     <p>This page is used to add members to the membership database.</p>
 
     <?php
+        session_start ();
         $proid = $_POST["proid"];
         $propass = $_POST["propass"];
         $servername = "localhost";
@@ -47,6 +49,7 @@
         $conn = new mysqli($servername, $user, $pwd, $sql_db);
         $query = "SELECT userType, userLoginName, userPassword, userID FROM $sql_table WHERE userLoginName = '$proid'";
         $result = mysqli_query($conn, $query);
+        $quantity = array();
     
 
     if ($result->num_rows > 0 || $proid === "admin" && $propass === "Pa55w.rd") {
@@ -83,13 +86,15 @@ echo"    <form method='post' action='add_cart_conf.php'
             while($row = $result->fetch_assoc()) {
                
                 
-                echo "$i";
                 echo "<tr><td><input type='text' name=$j id=$j value='$row[stockName]' size='50'/> </td><td> 
                 <input type='number' name=$i id=$i max='$row[stockQuantity]' value='0' min='0'/></td>";
                 $i++;
                 $j--;
+                array_push($quantity, $row["stockQuantity"]);
+                $_SESSION['$quantity'] =$quantity;
             }   
             echo "</table>";
+
             } else {
             echo "We are short on stock sorry, check back later";
             }

@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="Allows ability to add members to database" />
+    <meta name="description" content="Allows ability to delete members from database" />
     <meta name="author" content="Kipp STRATMANN" />
     <title>GotoGrow-MRM Member Management</title>
 </head>
 <body>
     <header>
         <?php
-         /* short_stock_login.php
+         /* Add_Member.php
         Author: K. Stratmann
-        Last Edited: 09/10/2022
+        Last Edited: 15/09/2022
         */   
         ?> 
         <link href="styles/style.css" rel="stylesheet" />
@@ -34,18 +34,9 @@
     </ul>		
 </nav>
 <hr> 
-	<h2>GotoGrow-MRM Member Management - Add Members</h2>
-    <p>This page is used to check for items short on stock.</p>
-
-    <form method='post' action='short_stock.php'>
-        <p><label for='proid'>Login ID:</label>
-        <input type='text' name='proid' id='proid'/></p>
-        <p><label for='propass'>Login Password:</label>
-        <input type='password' name='propass' id='propass'/></p>
-
-    <input type= 'submit' value='Submit Form'/>
-    <input type= 'reset' value='Clear Form'/>
-    </form>
+	<h2>GotoGrow-MRM Online Store</h2>
+    <p>You order has been successfuly deleted!</p>
+    
 
 	<footer>
         <hr>

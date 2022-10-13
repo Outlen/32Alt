@@ -31,6 +31,7 @@
         <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
         <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
         <li class="menu"><a href="short_stock_login.php">Stock Monitoring</a></li>
+        <li class="menu"><a href="check_cart.php">Ordering</a></li>
     </ul>		
 </nav>
 <hr> 
@@ -42,6 +43,7 @@
     $id = $_POST["id"];
     $i = 1;
     $a = array();
+    $b = array();
     $servername = "localhost";
 	$user = "root";
 	$pwd = "";
@@ -73,11 +75,20 @@
                 while($row = $result->fetch_assoc()) {
                     if ($a[$z] != 0) {
                     echo "<tr><td>" . $row["stockName"]. "</td><td>" .$a[$z]. " </td>";
+                    $temp = $row["stockName"];
+                    array_push($b, $temp);
                     }
                     $z++;
                 }   
                 echo "</table></p>";
+                $_SESSION['$a']=$a;
+                $_SESSION['$b']=$b;
+                $_SESSION['$id'] =$id;
+
                 } 
+                echo "<a href='confirm_order.php'><input type='submit' value='Confirm Order'/></a>";
+                echo "<a href='edit_cart.php'><input type='submit' value='Edit Order'/></a>";
+                echo "<a href='delete_order.php'><input type='submit' value='Delete Order'/></a>";
 
 
  /*
@@ -103,6 +114,20 @@
 					$conn2->close();
 		*/
         
+
+        $z = count ($a);
+        $i = 0;
+        $count = array();
+        while ($i < $z) {
+            if ($a[$i] != 0) {
+                $temp = $a[$i];
+                array_push($count, $temp);
+            }
+            $i++;
+        }
+    
+        $_SESSION['$count']=$count;
+
     ?>  
     <footer>
     <hr>

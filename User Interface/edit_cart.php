@@ -37,15 +37,63 @@
 	<h2>GotoGrow-MRM Member Management - Add Members</h2>
     <p>This page is used to add members to the membership database.</p>
 
-    <form method='post' action='Add_Cart.php'>
-        <p><label for='proid'>Login ID:</label>
-        <input type='text' name='proid' id='proid'/></p>
-        <p><label for='propass'>Login Password:</label>
-        <input type='password' name='propass' id='propass'/></p>
+    <?php
 
-    <input type= 'submit' value='Submit Form'/>
-    <input type= 'reset' value='Clear Form'/>
-    </form>
+    session_start ();
+        $count = $_SESSION['$count'];
+        $a = $_SESSION['$a'];
+        $b = $_SESSION['$b'];
+        $customerid = $_SESSION['$id'];
+        $servername = "localhost";
+        $user = "root";
+        $pwd = "";
+        $sql_db = "goto_gro_databases";
+        $conn = new mysqli($servername, $user, $pwd, $sql_db);
+    
+
+
+    $sql_table = "stock";
+    $query = "SELECT stockName, stockPrice_AUD, stockQuantity FROM $sql_table WHERE stockQuantity > 0";
+    $result = mysqli_query($conn, $query);
+
+    
+
+echo"    <form method='post' action='add_cart_conf.php'
+        <fieldset>
+            <legend><strong>Member Details</strong></legend>
+            <p><label for='id'>Member ID:</label>
+            <input type='text' name='id' id='id' value='$customerid'/></p>
+        </fieldset>
+        <hr>
+        <filedset>
+        <legend><strong>Select Items</strong></legend>";
+        if ($result->num_rows > 0) {
+            // output data of each row
+            echo "<table><tr><th>Item</th><th>Quantity</th>";
+            $i = 0;
+            $j = -1;
+            $k = 1;
+            while($row = $result->fetch_assoc()) {
+                echo "<tr><td><input type='text' name=$j id=$j value='$row[stockName]' size='50'/> </td><td> 
+                <input type='number' name=$k id=$k max='$row[stockQuantity]' value=$a[$i] min='0'/></td>";
+                $j--;
+                $k++;
+                $i++;
+            }
+               
+            echo "</table>";
+
+        }
+    
+        echo"<input type= 'submit' value='Submit Form'/>
+        <input type= 'reset' value='Clear Form'/>
+
+    
+    </div></form>";
+
+
+
+?>
 
 	<footer>
         <hr>
