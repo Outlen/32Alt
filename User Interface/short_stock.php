@@ -24,12 +24,18 @@
         <li class="menu"><a href="check_add.php">Add Member</a></li>
         <li class="menu"><a href="check_edit.php">Edit Member</a></li>
         <li class="menu"><a href="check_delete.php">Delete Member</a></li>
+		<li class="menu"><a href="check_cart.php">Add item to cart</a></li>
         <li class="menu"><a href="check_sales_add.php">Add Sales</a></li>
         <li class="menu"><a href="check_sales_edit.php">Edit Sales</a></li>
         <li class="menu"><a href="check_sales_delete.php">Delete Sales</a></li>
-        <li class="menu"><a href="check_item_add.php">Add item</a></li>
-        <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
-        <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
+        <li class="menu"><a href="check_item_add.php">Add item to inventory</a></li>
+        <li class="menu"><a href="check_item_edit.php">Edit item in inventory</a></li>
+        <li class="menu"><a href="check_item_delete.php">Delete item from inventory</a></li>
+		<li class="menu"><a href="check_view_details.php">View member</a></li>
+		<li class="menu"><a href="check_highlight_product.php">Highlight Products</a></li>
+		<li class="menu"><a href="check_generate_product.php">Product report</a></li>
+		<li class="menu"><a href="check_highlight_type.php">Highlight Product Types</a></li>
+		<li class="menu"><a href="check_generate_type.php">Product type report</a></li>
         <li class="menu"><a href="short_stock_login.php">Stock Monitoring</a></li>
         <li class="menu"><a href="check_cart.php">Ordering</a></li>
     </ul>		
@@ -51,7 +57,18 @@
     $conn2 = new mysqli($servername, $user, $pwd, $sql_db);
     echo "<h2>Short Stock Levels</h2>";
 
-    if ($proid === "admin" && $propass === "Pa55w.rd" || $type == 'Staff' && $id == $proid && $pass == $propass || $type == "Manager" && $id == $proid && $pass == $propass) {
+	$query = "SELECT userType, userLoginName, userPassword FROM users WHERE userLoginName = '$proid'";
+    $result = mysqli_query($conn2, $query);
+    if ($result->num_rows > 0 || $proid === "admin" && $propass === "Pa55w.rd") {
+            while($row = $result->fetch_assoc()) {
+                $type = $row["userType"];
+                $id = $row["userLoginName"];
+                $pass = $row["userPassword"];
+		}
+    }
+
+
+    if ($proid === "admin" && $propass === "Pa55w.rd" || $type == 'Floorstaff' && $id == $proid && $pass == $propass || $type == "Manager" && $id == $proid && $pass == $propass) {
 
             //Checks if the database connection is successful
             if ($conn2->connect_error) {

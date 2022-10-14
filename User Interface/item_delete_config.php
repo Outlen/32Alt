@@ -16,12 +16,18 @@
         <li class="menu"><a href="check_add.php">Add Member</a></li>
         <li class="menu"><a href="check_edit.php">Edit Member</a></li>
         <li class="menu"><a href="check_delete.php">Delete Member</a></li>
+		<li class="menu"><a href="check_cart.php">Add item to cart</a></li>
         <li class="menu"><a href="check_sales_add.php">Add Sales</a></li>
         <li class="menu"><a href="check_sales_edit.php">Edit Sales</a></li>
         <li class="menu"><a href="check_sales_delete.php">Delete Sales</a></li>
-        <li class="menu"><a href="check_item_add.php">Add item</a></li>
-        <li class="menu"><a href="check_item_edit.php">Edit item</a></li>
-        <li class="menu"><a href="check_item_delete.php">Delete item</a></li>
+        <li class="menu"><a href="check_item_add.php">Add item to inventory</a></li>
+        <li class="menu"><a href="check_item_edit.php">Edit item in inventory</a></li>
+        <li class="menu"><a href="check_item_delete.php">Delete item from inventory</a></li>
+		<li class="menu"><a href="check_view_details.php">View member</a></li>
+		<li class="menu"><a href="check_highlight_product.php">Highlight Products</a></li>
+		<li class="menu"><a href="check_generate_product.php">Product report</a></li>
+		<li class="menu"><a href="check_highlight_type.php">Highlight Product Types</a></li>
+		<li class="menu"><a href="check_generate_type.php">Product type report</a></li>
         <li class="menu"><a href="short_stock_login.php">Stock Monitoring</a></li>
     </ul>		
 </nav>
@@ -37,9 +43,7 @@
     $itemname = $_POST["itemname"];
     $itemprice = $_POST["itemprice"];
     $itemquantity = $_POST["itemquantity"];
-    $date = $_POST["date"];
     $itemc = $_POST["itemc"];
-    $itemmonthlysupply = $_POST["itemmonthlysupply"];
     $servername = "localhost";
 	$user = "root";
 	$pwd = "";
@@ -55,9 +59,8 @@
         <p>Item Name: $itemname</p>
         <p>Item Price (AUD): $itemprice</p>
         <p>Item Quantity: $itemquantity</p>
-        <p>Item Expiry Date: $date </p>
-        <p>Item Category: $itemc </p>
-        <p>Item Monthly Supplier Purchases: $itemmonthlysupply </p>";
+        <p>Item Category: $itemc </p>";
+
  
         //Checks if the database connection is successful
         if (!$conn) {
@@ -67,14 +70,12 @@
             $sql_table = "stock";
             $query = "DELETE FROM $sql_table WHERE 
             
-            `SKU`='$sku' &&
-            `stockName`='$itemname' &&
-            `stockPrice_AUD`='$itemprice' &&
-            `stockQuantity`='$itemquantity' &&
-            `stockExpiryDate`='$date' &&
-            `stockCategory`='$itemc' &&
-            `stockMonthlySupplierPurchases`='$itemmonthlysupply'
-            ";
+            SKU='$sku' &&
+            stockName='$itemname' &&
+            stockPrice_AUD='$itemprice' &&
+            stockQuantity='$itemquantity' &&
+            stockCategory='$itemc';";
+            
             $result = mysqli_query($conn, $query);
             if (!$result) {
                 //Provide feedback to the user on the result
