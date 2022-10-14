@@ -59,15 +59,15 @@
 		}
     }
 
-	if ($proid === "admin" && $propass === "Pa55w.rd" || $type == "Manager" && $id == $proid && $pass == $propass) { 
+	if ($proid === "admin" && $propass === "Pa55w.rd" || $type === "Manager" && $id == $proid && $pass == $propass) { 
 	echo"
     <form method='post' action='Highlight_Product_conf.php'
         <fieldset>
             <legend><strong>Select the month and year</strong></legend>
             <p><label for='month'>Month:</label>
-            <input type='text' name='month' id='month'/></p>
-			<p><label for='year'>Year:</label>
-            <input type='text' name='year' id='year'/></p>
+            <input type='text' name='month' id='month' pattern = '(?:[Jj]anuary|[Ff]ebruary|[Mm]arch|[Aa]pril|[Mm]ay|[Jj]une|[Jj]uly|[Aa]ugust|[Ss]eptember|[Oo]ctober|([Nn]ov|[Dd]ec)ember)'/></p>
+			<p><label for='year'>Year:</label> 
+			<input type='number' name='year' id='year' min=2010 max=2099/>
 			
 
         </fieldset>
@@ -78,6 +78,10 @@
     
     </div></form>";
     }
+	
+	else {
+	echo 'You are not permitted to use this feature';
+	}
 
 ?>
 

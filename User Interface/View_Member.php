@@ -108,7 +108,7 @@
 						<fieldset>
 							<legend><strong>Enter order number if you want to view the detailed sale</strong></legend>
 							<p><label for='orderID'>Order number:</label>
-							<input type='text' name='orderID' id='orderID'/></p>
+							<input type='text' name='orderID' id='orderID' pattern = '^[0-9]+$'/></p>
 						</fieldset>
 					<br>
 
