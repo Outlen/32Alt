@@ -1,0 +1,17 @@
+/*s htm
+filename: stlye.css
+author: Kipp STRATMANN
+created: 9/03/2022
+last modified: 9/03/2022
+description: relates to assignment1 folder 
+*/
+
+/*The following several blocks of code will set the menu/navigation up and define its various display rules*/
+.menu       {display: inline-block;}
+
+nav a       {border: 2px solid blue;
+            background-color: whitesmoke; 
+            color:black; padding: 0.25em 1em;}
+
+nav a:hover {border: 4px solid greenyellow; 
+            background-color: yellowgreen;}
